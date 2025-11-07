@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Tower Defense — Python Control</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/dracula.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/python/python.min.js"></script>
+<script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+</head>
+<body>
+<div class="container">
+  <div class="left card">
+    <div class="panel-title">
+      <h1>Tower Defense</h1>
+      <div style="display:flex;gap:10px;align-items:center">
+        <div class="chip" id="wave">Волна: 0</div>
+        <div class="chip" id="money">Деньги: 100</div>
+        <div class="chip" id="lives">Жизни: 10</div>
+        <div class="chip" id="score">Счёт: 0</div>
+      </div>
+    </div>
+    <div id="gameWrap">
+      <canvas id="gameCanvas"></canvas>
+      <div id="ruler">
+        <div>Ширина: <span id="canvasWidth">0</span></div>
+        <div>Высота: <span id="canvasHeight">0</span></div>
+        <div class="coordinates">Координаты: (<span id="mouseX">0</span>, <span id="mouseY">0</span>)</div>
+      </div>
+      <button class="btn small ruler-toggle" id="toggleRulerBtn">📏</button>
+      <div id="gameOver">
+        <div class="game-over-text">GAME OVER</div>
+        <div class="game-over-subtext">Волна: <span id="finalWave">0</span> | Счёт: <span id="finalScore">0</span></div>
+        <div class="game-over-stats">
+          <div>Убито врагов: <span id="kills">0</span></div>
+          <div>Построено башен: <span id="towersBuilt">0</span></div>
+          <div>Всего улучшений: <span id="upgradesDone">0</span></div>
+        </div>
+        <div class="game-over-subtext pulse">Нажмите любую кнопку для продолжения</div>
+      </div>
+    </div>
+    <div class="controls-row">
+      <button class="btn small" id="togglePathBtn">Path: Wave</button>
+      <div style="flex:1"></div>
+      <button class="btn small danger" id="resetBtn">Reset</button>
+    </div>
+  </div>
+  <div class="right">
+    <div class="card editor-wrap">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div class="tabs">
+          <div class="tab active" data-tab="editor">Editor</div>
+          <div class="tab" data-tab="guide">Guide</div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn small" id="runBtn">Run (Ctrl+Enter)</button>
+        </div>
+      </div>
+      <div id="editor"></div>
+      <div id="guidePanel" class="guide-content"></div>
+    </div>
+    <div class="card">
+      <div id="console" aria-live="polite"></div>
+      <div class="footer-row">
+        <div class="hint">Функции: <code>build_tower("имя", x, y)</code>, <code>upgrade_tower("имя")</code></div>
+        <div style="display:flex;gap:8px">
+          <button class="btn small" id="clearConsoleBtn">Clear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="game.js"></script>
+<script src="editor.js"></script>
+</body>
+</html>
