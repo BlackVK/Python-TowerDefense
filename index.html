@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tower Defense Python - Обучение программированию</title>
+    
+    <!-- CSS файлы -->
+    <link rel="stylesheet" href="styles/game.css">
+    <link rel="stylesheet" href="styles/menu.css">
+    <link rel="stylesheet" href="styles/styles.css">
+    
+    <!-- CodeMirror -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/dracula.min.css">
+    
+    <!-- Pyodide -->
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+</head>
+<body>
+    <!-- Главное меню -->
+    <div id="mainMenu"></div>
+    
+    <!-- Игровой интерфейс -->
+    <div class="container" style="display: none;">
+        <div class="left card">
+            <div class="panel-title">
+                <h1 id="gameTitle">Tower Defense Python</h1>
+                <div class="game-stats">
+                    <div class="chip" id="wave">Волна: 0</div>
+                    <div class="chip" id="money">Деньги: 100</div>
+                    <div class="chip" id="lives">Жизни: 10</div>
+                    <div class="chip" id="score">Счёт: 0</div>
+                </div>
+            </div>
+            
+            <div id="gameWrap">
+                <canvas id="gameCanvas"></canvas>
+                
+                <!-- Экран описания уровня -->
+                <div id="levelDescription">
+                    <div class="level-description-content">
+                        <h2 id="levelDescriptionTitle">Уровень 1: Основы</h2>
+                        <div class="level-objective">
+                            <h3>🎯 Цель уровня:</h3>
+                            <p id="levelObjectiveText">Пройдите 5 волн, построив эффективную защиту</p>
+                        </div>
+                        <div class="level-tips">
+                            <h3>💡 Советы:</h3>
+                            <ul id="levelTipsList"></ul>
+                        </div>
+                        <div class="level-rewards">
+                            <h3>🏆 Награда:</h3>
+                            <p id="levelRewardText">Откроется следующий уровень кампании</p>
+                        </div>
+                        <button class="btn-menu start-level-btn">Начать игру</button>
+                    </div>
+                </div>
+                
+                <!-- Линейка -->
+                <div id="ruler">
+                    <div>Ширина: <span id="canvasWidth">0</span></div>
+                    <div>Высота: <span id="canvasHeight">0</span></div>
+                    <div class="coordinates">Координаты: (<span id="mouseX">0</span>, <span id="mouseY">0</span>)</div>
+                </div>
+                <button class="btn small ruler-toggle" id="toggleRulerBtn">📏</button>
+                
+                <!-- Game Over экран -->
+                <div id="gameOver">
+                    <div class="game-over-text">GAME OVER</div>
+                    <div class="game-over-subtext">Волна: <span id="finalWave">0</span> | Счёт: <span id="finalScore">0</span></div>
+                    <div class="game-over-stats">
+                        <div>Убито врагов: <span id="kills">0</span></div>
+                        <div>Построено башен: <span id="towersBuilt">0</span></div>
+                        <div>Всего улучшений: <span id="upgradesDone">0</span></div>
+                    </div>
+                    <div class="game-over-subtext pulse">Нажмите любую кнопку для продолжения</div>
+                </div>
+            </div>
+            
+            <div class="controls-row">
+                <div class="chip" id="mapInfo">Карта: Волновая</div>
+                <div style="flex:1"></div>
+                <button class="btn small" id="menuBtn">🏠 Меню</button>
+                <button class="btn small danger" id="resetBtn">Reset</button>
+            </div>
+        </div>
+        
+        <div class="right">
+            <div class="card editor-wrap">
+                <div class="editor-header">
+                    <div class="tabs">
+                        <div class="tab active" data-tab="editor">📝 Редактор</div>
+                        <div class="tab" data-tab="guide">📖 Гайд</div>
+                    </div>
+                    <div class="editor-controls">
+                        <button class="btn small" id="runBtn">▶️ Выполнить (Ctrl+Enter)</button>
+                    </div>
+                </div>
+                
+                <div id="editor"></div>
+                
+                <div id="guidePanel" class="guide-content">
+                    <div id="guideContent"></div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div id="console" aria-live="polite"></div>
+                <div class="footer-row">
+                    <div class="hint">Функции: <code>build_tower("имя", x, y)</code>, <code>upgrade_tower("имя")</code></div>
+                    <div class="console-controls">
+                        <button class="btn small" id="clearConsoleBtn">🗑️ Очистить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Загрузка библиотек -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/python/python.min.js"></script>
+    
+    <!-- Наши JS файлы -->
+    <script src="scripts/database.js"></script>
+    <script src="scripts/auth.js"></script>
+    <script src="scripts/game.js"></script>
+    <script src="scripts/editor.js"></script>
+    <script src="scripts/ui.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>
